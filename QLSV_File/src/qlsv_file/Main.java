@@ -22,7 +22,7 @@ public class Main extends javax.swing.JFrame {
     private JPanel childPanel;
     public Main() throws IOException {
         initComponents();
-        showPanel(new ThoiKhoaBieuWindow());
+        showPanel(new DSSinhVienWindow());
     }
     public void showPanel(JPanel panel)
     {
@@ -73,12 +73,27 @@ public class Main extends javax.swing.JFrame {
         jPanel1.add(btnQL_Lop, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 122, -1));
 
         jButton2.setText("Quản Lý Thời Khoá Biểu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         jButton3.setText("Quản Lý Đăng Ký");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jButton6.setText("Import Bảng Điểm");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         jButton4.setText("Quản Lý Sinh Viên");
@@ -142,7 +157,7 @@ public class Main extends javax.swing.JFrame {
     private void btnQL_LopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQL_LopActionPerformed
        
         try {
-            showPanel(new ThoiKhoaBieuWindow());
+            showPanel(new DSSinhVienWindow());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -152,6 +167,18 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        showPanel(new ThoiKhoaBieuWindow());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        showPanel(new DangKyWindow());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+         showPanel(new BangDiemWindow());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
