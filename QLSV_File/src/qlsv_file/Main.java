@@ -5,6 +5,9 @@
  */
 package qlsv_file;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -17,7 +20,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     private JPanel childPanel;
-    public Main() {
+    public Main() throws IOException {
         initComponents();
         showPanel(new ThoiKhoaBieuWindow());
     }
@@ -59,6 +62,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 102));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnQL_Lop.setText("Quản Lý Lớp");
         btnQL_Lop.addActionListener(new java.awt.event.ActionListener() {
@@ -66,49 +70,22 @@ public class Main extends javax.swing.JFrame {
                 btnQL_LopActionPerformed(evt);
             }
         });
+        jPanel1.add(btnQL_Lop, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 122, -1));
 
         jButton2.setText("Quản Lý Thời Khoá Biểu");
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         jButton3.setText("Quản Lý Đăng Ký");
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jButton6.setText("Import Bảng Điểm");
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         jButton4.setText("Quản Lý Sinh Viên");
+        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
 
         jButton5.setText("Sinh Viên");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnQL_Lop, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(38, 38, 38)
-                .addComponent(jButton6)
-                .addGap(46, 46, 46)
-                .addComponent(jButton4)
-                .addGap(44, 44, 44)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnQL_Lop)
-                    .addComponent(jButton3)
-                    .addComponent(jButton6)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
+        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, 126, -1));
 
         pnMain.setLayout(new java.awt.BorderLayout());
 
@@ -153,9 +130,9 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -163,7 +140,13 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnQL_LopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQL_LopActionPerformed
-         showPanel(new ThoiKhoaBieuWindow());
+       
+        try {
+            showPanel(new ThoiKhoaBieuWindow());
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnQL_LopActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -200,7 +183,11 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                try {
+                    new Main().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
