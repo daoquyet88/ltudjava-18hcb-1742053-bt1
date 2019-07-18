@@ -5,6 +5,16 @@
  */
 package qlsv_file;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,8 +24,41 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
     /**
      * Creates new form ThoiKhoaBieuWindow
      */
-    public ThoiKhoaBieuWindow() {
+    String path="";
+    public ThoiKhoaBieuWindow() throws IOException {
         initComponents();
+        load();
+    }
+    public void load() throws IOException{
+          String file="C:\\Users\\Admin\\Desktop\\File CSV\\17hcb_tkb.csv";
+          docFile(file);
+          File f=new File(file);
+        String nameFile=f.getName();
+        lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
+    }
+    public void docFile(String p) throws FileNotFoundException, IOException{
+        DefaultTableModel dtm=new DefaultTableModel();       
+         
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        String [] NameSV;
+        String []dataSV;
+        String line = br.readLine();
+        NameSV=line.split(",");
+        for(int i=0;i<NameSV.length;i++){
+            dtm.addColumn(String.valueOf(NameSV[i]));
+        }         
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+               dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3]});
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+         this.tbTKB.setModel(dtm);
+        this.tbTKB.repaint();
+        this.tbTKB.revalidate();
     }
 
     /**
@@ -27,29 +70,33 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lbThongBao = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         lbDuongDan = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbTKB = new javax.swing.JTable();
 
         setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Thời Khoá Biểu Lớp Học ");
-        add(jLabel1);
-        jLabel1.setBounds(310, 20, 390, 30);
+        lbThongBao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbThongBao.setText("Thời Khoá Biểu Lớp Học ");
+        add(lbThongBao);
+        lbThongBao.setBounds(210, 20, 550, 30);
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 102));
+        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setText("Chọn File Thời Khoá Biểu :");
 
         jButton1.setText("Import File ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         lbDuongDan.setText("Đường Dẫn");
 
@@ -83,20 +130,6 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
 
         add(jPanel1);
         jPanel1.setBounds(10, 80, 310, 390);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        add(jPanel2);
-        jPanel2.setBounds(420, 80, 100, 100);
 
         tbTKB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,16 +165,45 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         jPanel3.setBounds(340, 60, 640, 420);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        JFileChooser file =new JFileChooser();
+       file.setCurrentDirectory(new File(System.getProperty("user.home")));
+       
+       // FileNameExtensionFilter fileter=new FileNameExtensionFilter("*.images","jpg","png");
+        //file.addChoosableFileFilter(fileter);
+        int result=file.showSaveDialog(this);
+        if(result==JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile=file.getSelectedFile();
+            path=selectedFile.getAbsolutePath();
+            //lbImg.setIcon(ResizeImage(path,null));
+            lbDuongDan.setText(path);
+        }
+        else{
+            System.out.println("NO file select");
+        }
+        
+        try {
+            // TODO add your handling code here:
+            docFile(path);
+        } catch (IOException ex) {
+            Logger.getLogger(DSSinhVienWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        File f=new File(path);
+        String nameFile=f.getName();
+        lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbDuongDan;
+    private javax.swing.JLabel lbThongBao;
     private javax.swing.JTable tbTKB;
     // End of variables declaration//GEN-END:variables
 }

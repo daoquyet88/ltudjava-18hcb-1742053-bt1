@@ -5,6 +5,19 @@
  */
 package qlsv_file;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,10 +27,110 @@ public class DangKyWindow extends javax.swing.JPanel {
     /**
      * Creates new form DangKyWindow
      */
-    public DangKyWindow() {
+    String lopHoc="";
+    String maMH="";
+    public DangKyWindow() throws IOException {
         initComponents();
+       load();
+        //loadcb1();
     }
+    public void loadcb1(String p) throws FileNotFoundException, IOException{
+        
+         DefaultComboBoxModel model=new DefaultComboBoxModel();
+       // model.addElement(new MonHoc("0","--Chon doi bong-"));
+//        for(entities.Doibong db : this.dbDao.load_danhSach())
+//        {
+//            
+//            model.addElement(new Doibong(db.getMaDoiBong(),db.getTenDoiBong()));
+//            //cb_doiBong.addItem(db.getTenDoiBong());
+//        }
+        
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        
+        String []dataSV;
+        String line = br.readLine();
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+               model.addElement(new MonHoc(dataSV[1],dataSV[2]));
+               //cbDSMH.addItem(dataSV[2].toString());
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
 
+        cbDSMH.setModel(model);
+    }
+    public void load() throws IOException{
+         String file="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+         docFileLH(file);
+         File f=new File(file);
+        String nameFile=f.getName();
+        lbThongBao.setText("Thông Tin Môn Học Lớp : "+nameFile);
+    }
+    public void docFileLH(String p) throws FileNotFoundException, IOException{
+       
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);        
+        String []dataSV;
+        String line = br.readLine();      
+          
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+              cbLop.addItem(dataSV[0]);
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+        
+    }
+     public void docFile(String p) throws FileNotFoundException, IOException{
+        DefaultTableModel dtm=new DefaultTableModel();       
+         
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        String [] NameSV;
+        String []dataSV;
+        String line = br.readLine();
+        NameSV=line.split(",");
+        for(int i=0;i<NameSV.length;i++){
+            dtm.addColumn(String.valueOf(NameSV[i]));
+        }         
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+               dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4]});
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+         this.tbMonHoc.setModel(dtm);
+        this.tbMonHoc.repaint();
+        this.tbMonHoc.revalidate();
+    }
+     public void docFileDSMH(String p) throws FileNotFoundException, IOException{
+   
+         cbDSMH.removeAllItems();
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        
+        String []dataSV;
+        String line = br.readLine();
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+               //dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4]});
+               cbDSMH.addItem(dataSV[2].toString());
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+//         this.tbMonHoc.setModel(dtm);
+//        this.tbMonHoc.repaint();
+//        this.tbMonHoc.revalidate();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +141,7 @@ public class DangKyWindow extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jLabel1 = new javax.swing.JLabel();
+        lbThongBao = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnTimKiem = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -46,22 +159,27 @@ public class DangKyWindow extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        cbLop = new javax.swing.JComboBox();
+        cbDSMH = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbMonHoc = new javax.swing.JTable();
 
         setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Quản Lý Đăng Ký Môn Học");
-        add(jLabel1);
-        jLabel1.setBounds(260, 10, 239, 22);
+        lbThongBao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbThongBao.setText("Quản Lý Đăng Ký Môn Học");
+        add(lbThongBao);
+        lbThongBao.setBounds(250, 10, 550, 22);
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("MSSV");
 
@@ -98,50 +216,46 @@ public class DangKyWindow extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnTimKiem))
+                        .addGap(17, 17, 17)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(40, 40, 40)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(30, 30, 30)
                                 .addComponent(rdNam)
                                 .addGap(18, 18, 18)
                                 .addComponent(rdNu))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 43, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4))
+                                .addGap(27, 27, 27)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap(68, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnTimKiem)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTimKiem)
+                            .addComponent(jLabel4)
+                            .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -151,31 +265,45 @@ public class DangKyWindow extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(rdNam)
                             .addComponent(rdNu))
-                        .addGap(26, 26, 26)
-                        .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))
                     .addComponent(jLabel7))
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel1);
-        jPanel1.setBounds(12, 80, 310, 390);
+        jPanel1.setBounds(10, 60, 310, 420);
 
         jButton1.setBackground(new java.awt.Color(255, 102, 102));
         jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Lớp");
 
         jLabel3.setText("Môn Học");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbLop.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLopItemStateChanged(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbDSMH.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbDSMHItemStateChanged(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbMonHoc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -186,7 +314,7 @@ public class DangKyWindow extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbMonHoc);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -197,17 +325,17 @@ public class DangKyWindow extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(59, 59, 59)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
+                        .addGap(38, 38, 38)
+                        .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3)
-                        .addGap(70, 70, 70)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addGap(57, 57, 57)
+                        .addComponent(cbDSMH, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -218,8 +346,8 @@ public class DangKyWindow extends javax.swing.JPanel {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbDSMH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -237,16 +365,93 @@ public class DangKyWindow extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHoTenActionPerformed
 
+    private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\";
+        String nameLop=cbLop.getSelectedItem().toString();
+        lopHoc=nameLop;
+        String nameDSMH=nameLop+"_TKB.csv";
+        file=file+nameDSMH;
+        //JOptionPane.showMessageDialog(cbLop,file);
+        if(nameDSMH!=null){
+            try {
+                loadcb1(file);
+            } catch (IOException ex) {
+                Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_cbLopItemStateChanged
+
+    private void cbDSMHItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbDSMHItemStateChanged
+
+    }//GEN-LAST:event_cbDSMHItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String ma=((MonHoc)cbDSMH.getSelectedItem()).getMaMH();
+        String name=cbLop.getSelectedItem().toString();
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_"+ma+".csv";
+
+       // JOptionPane.showMessageDialog(cbLop,file);
+        try {
+            docFile(file);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String  mssv=txtMSSV.getText();
+        String maLop=mssv.substring(0,2)+"hcb";
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+maLop+".csv";
+        JOptionPane.showMessageDialog(cbLop,file);
+          
+        FileReader fr=null;
+        try {
+            fr = new FileReader(file);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedReader br = new BufferedReader(fr);
+        String []dataSV;
+        String line="";
+        try {
+            line = br.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         while(line != null){
+              dataSV=line.split(",");
+             // String mas=dataSV[1].toString();
+               if(dataSV[1].toString().equals(mssv)){
+                   txtHoTen.setText(dataSV[2].toString());
+                   txtCMND.setText(dataSV[4].toString());
+                   break;
+               }
+            try {
+                line =br.readLine();
+            } catch (IOException ex) {
+                Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+        try {
+            br.close();
+             fr.close();
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+         
+        
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cbDSMH;
+    private javax.swing.JComboBox cbLop;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -256,9 +461,10 @@ public class DangKyWindow extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbThongBao;
     private javax.swing.JRadioButton rdNam;
     private javax.swing.JRadioButton rdNu;
+    private javax.swing.JTable tbMonHoc;
     private javax.swing.JTextField txtCMND;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtMSSV;
