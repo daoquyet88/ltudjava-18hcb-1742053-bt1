@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -27,6 +28,7 @@ public class DangKyWindow extends javax.swing.JPanel {
     /**
      * Creates new form DangKyWindow
      */
+    String lineAll;
     String lopHoc="";
     String maMH="";
     public DangKyWindow() throws IOException {
@@ -37,14 +39,7 @@ public class DangKyWindow extends javax.swing.JPanel {
     public void loadcb1(String p) throws FileNotFoundException, IOException{
         
          DefaultComboBoxModel model=new DefaultComboBoxModel();
-       // model.addElement(new MonHoc("0","--Chon doi bong-"));
-//        for(entities.Doibong db : this.dbDao.load_danhSach())
-//        {
-//            
-//            model.addElement(new Doibong(db.getMaDoiBong(),db.getTenDoiBong()));
-//            //cb_doiBong.addItem(db.getTenDoiBong());
-//        }
-        
+      
         FileReader fr = new FileReader(p);
         BufferedReader br = new BufferedReader(fr);
         
@@ -131,6 +126,35 @@ public class DangKyWindow extends javax.swing.JPanel {
 //        this.tbMonHoc.repaint();
 //        this.tbMonHoc.revalidate();
     }
+     public void ghiFile(String p) throws FileNotFoundException, IOException{
+        try{
+          File file=new File(p);
+          FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+          BufferedWriter bw = new BufferedWriter(fw);
+          int stt=tbMonHoc.getRowCount();
+          stt++;          
+          
+          String mssv=txtMSSV.getText();
+          String hoTen=txtHoTen.getText();
+          String gioiTinh="";
+          if(rdNam.isEnabled())
+          {
+              gioiTinh="Nam";
+          }
+          else{
+               gioiTinh="Nu";
+          }
+          JOptionPane.showMessageDialog(cbLop,gioiTinh);
+//          String cmnd=txtCMND.getText(); 
+//          bw.newLine();
+//          bw.write(stt+","+mssv+","+hoTen+","+gioiTinh+","+cmnd);             
+          bw.close();
+          fw.close();
+         //JOptionPane.showMessageDialog(this,"Thêm Sinh Viên Thành Công");                 
+         }catch(Exception e){
+          JOptionPane.showMessageDialog(this,"Thêm Thất Bại"+e);
+      }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -153,7 +177,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         rdNam = new javax.swing.JRadioButton();
         rdNu = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnThemSV = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -163,6 +187,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         cbDSMH = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbMonHoc = new javax.swing.JTable();
+        btnHuyMH = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -206,7 +231,12 @@ public class DangKyWindow extends javax.swing.JPanel {
 
         jLabel7.setText("CMND");
 
-        jButton2.setText("Thêm");
+        btnThemSV.setText("Thêm");
+        btnThemSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSVActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Reset");
 
@@ -219,28 +249,25 @@ public class DangKyWindow extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(30, 30, 30)
+                        .addComponent(rdNam)
+                        .addGap(18, 18, 18)
+                        .addComponent(rdNu))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(30, 30, 30)
-                                .addComponent(rdNam)
-                                .addGap(18, 18, 18)
-                                .addComponent(rdNu))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(txtMSSV, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -271,7 +298,7 @@ public class DangKyWindow extends javax.swing.JPanel {
                     .addComponent(jLabel7))
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -316,6 +343,15 @@ public class DangKyWindow extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbMonHoc);
 
+        btnHuyMH.setBackground(new java.awt.Color(255, 102, 102));
+        btnHuyMH.setText("Huỷ Môn");
+        btnHuyMH.setToolTipText("Chọn Vào Dòng Sinh Viên  Cần Huỷ Môn Học . ");
+        btnHuyMH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyMHActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -337,6 +373,10 @@ public class DangKyWindow extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(btnHuyMH, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,7 +389,9 @@ public class DangKyWindow extends javax.swing.JPanel {
                     .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbDSMH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnHuyMH)
                 .addContainerGap())
         );
 
@@ -389,7 +431,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         String ma=((MonHoc)cbDSMH.getSelectedItem()).getMaMH();
         String name=cbLop.getSelectedItem().toString();
         String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_"+ma+".csv";
-
+        lineAll=file;
        // JOptionPane.showMessageDialog(cbLop,file);
         try {
             docFile(file);
@@ -397,7 +439,7 @@ public class DangKyWindow extends javax.swing.JPanel {
             Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         String  mssv=txtMSSV.getText();
         String maLop=mssv.substring(0,2)+"hcb";
@@ -443,14 +485,75 @@ public class DangKyWindow extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
+    private void btnHuyMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyMHActionPerformed
+       String stt = this.tbMonHoc.getValueAt(this.tbMonHoc.getSelectedRow(),0).toString();
+       String mssv = this.tbMonHoc.getValueAt(this.tbMonHoc.getSelectedRow(),1).toString();
+       String hoTen = this.tbMonHoc.getValueAt(this.tbMonHoc.getSelectedRow(),2).toString();
+       String gt = this.tbMonHoc.getValueAt(this.tbMonHoc.getSelectedRow(),3).toString();
+       String cmnd= this.tbMonHoc.getValueAt(this.tbMonHoc.getSelectedRow(),4).toString();
+       String dongHuy=stt+","+mssv+","+hoTen+","+gt+","+cmnd;
+       JOptionPane.showMessageDialog(cbLop,dongHuy);
+       String p=lineAll;
+         String dataSV[];
+         try{
+            ArrayList<String> ar=new ArrayList<String>();
+            FileReader fr = new FileReader(p);
+            BufferedReader br = new BufferedReader(fr);
+            String  line = br.readLine();
+            
+              while(line != null){
+                  ar.add(line);
+                  line =br.readLine();
+              }
+
+//            for(String s : ar){
+//                System.out.println("kq"+s);
+//            }
+            br.close();
+            fr.close();
+
+            FileWriter fw = new FileWriter(p);
+            BufferedWriter bw = new BufferedWriter(fw);  
+            for(String s : ar){
+                if(s.equals(dongHuy))
+                {
+                     JOptionPane.showMessageDialog(cbLop,dongHuy);
+                }
+                else{
+                    bw.write(s);
+                    bw.newLine();
+                }
+            }
+            bw.close();
+            fw.close();
+         }
+         catch(Exception e){
+             
+         }
+        try {
+            docFile(p);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnHuyMHActionPerformed
+
+    private void btnThemSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSVActionPerformed
+        try {
+            ghiFile(lineAll);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnThemSVActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHuyMH;
+    private javax.swing.JButton btnThemSV;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cbDSMH;
     private javax.swing.JComboBox cbLop;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

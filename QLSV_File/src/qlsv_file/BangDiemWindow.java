@@ -5,6 +5,16 @@
  */
 package qlsv_file;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,10 +24,62 @@ public class BangDiemWindow extends javax.swing.JPanel {
     /**
      * Creates new form BangDiemWindow
      */
-    public BangDiemWindow() {
+    String path="";
+    public BangDiemWindow() throws IOException {
         initComponents();
+        load();
     }
-
+    public void load() throws IOException{
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\18hcb_CTT001_KQ.csv";
+        path=file;
+        File f=new File(file);
+        String nameFile=f.getName();
+        lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên: "+nameFile);
+        docFile(file);
+        String lh="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+        docFileLH(lh);
+    }
+    public void docFile(String p) throws FileNotFoundException, IOException{
+        DefaultTableModel dtm=new DefaultTableModel();       
+         
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        String [] NameSV;
+        String []dataSV;
+        String line = br.readLine();
+        NameSV=line.split(",");
+        for(int i=0;i<NameSV.length;i++){
+            dtm.addColumn(String.valueOf(NameSV[i]));
+        }         
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+               dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4],dataSV[5],dataSV[6]});
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+         this.tbBangDiem.setModel(dtm);
+        this.tbBangDiem.repaint();
+        this.tbBangDiem.revalidate();
+    }
+    public void docFileLH(String p) throws FileNotFoundException, IOException{
+       
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);        
+        String []dataSV;
+        String line = br.readLine();      
+          
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+              cbLop.addItem(dataSV[0]);
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,8 +89,11 @@ public class BangDiemWindow extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lbThongBao = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        lbDuongDan = new javax.swing.JLabel();
         cbMonHoc = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         cbLop = new javax.swing.JComboBox();
@@ -42,22 +107,50 @@ public class BangDiemWindow extends javax.swing.JPanel {
 
         setLayout(null);
 
-        jLabel1.setText("Quản Lý Bảng Điểm Sinh Viên");
-        add(jLabel1);
-        jLabel1.setBounds(302, 0, 279, 28);
+        lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên");
+        add(lbThongBao);
+        lbThongBao.setBounds(260, 10, 420, 28);
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setText("Chọn File Điểm Cần Import");
+
+        jButton1.setText("File Import");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        lbDuongDan.setText("URL");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lbDuongDan, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbDuongDan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         add(jPanel1);
@@ -65,11 +158,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
 
         jLabel2.setText("Lớp");
 
-        cbLop.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel3.setText("Môn Học");
-
-        cbMH.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnTimKiem.setBackground(new java.awt.Color(255, 102, 102));
         btnTimKiem.setText("Tìm Kiếm");
@@ -97,13 +186,13 @@ public class BangDiemWindow extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(cbMonHocLayout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(51, 51, 51)
-                        .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel3)
-                        .addGap(54, 54, 54)
-                        .addComponent(cbMH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
+                        .addGap(29, 29, 29)
+                        .addComponent(cbMH, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
                         .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -134,12 +223,47 @@ public class BangDiemWindow extends javax.swing.JPanel {
         jButton3.setBounds(593, 463, 87, 30);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser file =new JFileChooser();
+       file.setCurrentDirectory(new File(System.getProperty("user.home")));
+       
+       // FileNameExtensionFilter fileter=new FileNameExtensionFilter("*.images","jpg","png");
+        //file.addChoosableFileFilter(fileter);
+        int result=file.showSaveDialog(this);
+        if(result==JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile=file.getSelectedFile();
+            path=selectedFile.getAbsolutePath();
+            //lbImg.setIcon(ResizeImage(path,null));
+            lbDuongDan.setText(path);
+        }
+        else{
+            System.out.println("NO file select");
+        }
+        
+        try {
+            // TODO add your handling code here:
+            docFile(path);
+        } catch (IOException ex) {
+            Logger.getLogger(DSSinhVienWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        File f=new File(path);
+        String nameFile=f.getName();
+        lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
+        try {
+            docFile(path);
+        } catch (IOException ex) {
+            Logger.getLogger(BangDiemWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox cbLop;
     private javax.swing.JComboBox cbMH;
     private javax.swing.JPanel cbMonHoc;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -147,6 +271,8 @@ public class BangDiemWindow extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbDuongDan;
+    private javax.swing.JLabel lbThongBao;
     private javax.swing.JTable tbBangDiem;
     // End of variables declaration//GEN-END:variables
 }

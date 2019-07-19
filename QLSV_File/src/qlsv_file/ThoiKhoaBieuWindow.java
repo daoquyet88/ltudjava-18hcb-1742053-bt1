@@ -30,12 +30,37 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         load();
     }
     public void load() throws IOException{
-          String file="C:\\Users\\Admin\\Desktop\\File CSV\\17hcb_tkb.csv";
-          docFile(file);
-          File f=new File(file);
+         String file="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+         docFileLH(file);
+         File f=new File(file);
         String nameFile=f.getName();
-        lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
+        lbThongBao.setText("Thông Tin Môn Học Lớp : "+nameFile);
+       
     }
+    public void docFileLH(String p) throws FileNotFoundException, IOException{
+       
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);        
+        String []dataSV;
+        String line = br.readLine();      
+          
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+              cbLop.addItem(dataSV[0]);
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+        
+    }
+//    public void load() throws IOException{
+//          String file="C:\\Users\\Admin\\Desktop\\File CSV\\17hcb_tkb.csv";
+//          docFile(file);
+//          File f=new File(file);
+//        String nameFile=f.getName();
+//        lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
+//    }
     public void docFile(String p) throws FileNotFoundException, IOException{
         DefaultTableModel dtm=new DefaultTableModel();       
          
@@ -78,6 +103,8 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbTKB = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        cbLop = new javax.swing.JComboBox();
 
         setLayout(null);
 
@@ -144,6 +171,14 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbTKB);
 
+        jLabel1.setText("Chọn Lớp ");
+
+        cbLop.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLopItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -152,12 +187,22 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addGap(57, 57, 57)
+                .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -195,9 +240,23 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
+        String name=cbLop.getSelectedItem().toString();
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_TKB.csv";
+
+       // JOptionPane.showMessageDialog(cbLop,file);
+        try {
+            docFile(file);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbLopItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cbLop;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;

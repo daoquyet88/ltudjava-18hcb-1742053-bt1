@@ -39,20 +39,25 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
         String nameFile=f.getName();
         lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
         docFile(file);
+        String lh="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+        docFileLH(lh);
     }
-    public void loadDanhSach(){
-     
-//        DefaultTableModel dtm=new DefaultTableModel();
-//        dtm.addColumn("MSSV");
-//        dtm.addColumn("Họ Tên");
-//        dtm.addColumn("Giới Tính"); 
-//        dtm.addColumn("CMND"); 
-//        dtm.addRow(new Object[]{"123","dao van quyet","nam","123456789"});          
-//       
-//        this.tbSinhVien.setModel(dtm);
-//        this.tbSinhVien.repaint();
-//        this.tbSinhVien.revalidate();
-    
+     public void docFileLH(String p) throws FileNotFoundException, IOException{
+       
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);        
+        String []dataSV;
+        String line = br.readLine();      
+          
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+              cbLop.addItem(dataSV[0]);
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+        
     }
     public void docFile(String p) throws FileNotFoundException, IOException{
         DefaultTableModel dtm=new DefaultTableModel();       
@@ -121,8 +126,12 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
         txtGioiTinh = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtCMND = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnThemSV = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        cbLop = new javax.swing.JComboBox();
+
+        setLayout(null);
 
         tbSinhVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,8 +146,13 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbSinhVien);
 
+        add(jScrollPane1);
+        jScrollPane1.setBounds(359, 143, 603, 291);
+
         lbThongBao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbThongBao.setText("Thông Tin Danh Sách Sinh Viên ");
+        add(lbThongBao);
+        lbThongBao.setBounds(395, 43, 288, 22);
 
         jButton1.setText("Import Danh Sách");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -146,11 +160,17 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        add(jButton1);
+        jButton1.setBounds(12, 13, 147, 25);
 
         lbPath.setText("Đường Đẫn");
+        add(lbPath);
+        lbPath.setBounds(221, 17, 65, 16);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setText("Thêm Sinh Viên Vào Lớp Học ");
+        add(jLabel1);
+        jLabel1.setBounds(60, 56, 237, 20);
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -163,10 +183,10 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
 
         jLabel5.setText("CMND");
 
-        jButton2.setText("OK");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnThemSV.setText("OK");
+        btnThemSV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnThemSVActionPerformed(evt);
             }
         });
 
@@ -203,7 +223,7 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
                                     .addComponent(txtGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(35, 35, 35)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
@@ -229,58 +249,25 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
                     .addComponent(txtCMND, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnThemSV, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addComponent(lbPath)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel1)))
-                .addGap(98, 98, 98)
-                .addComponent(lbThongBao)
-                .addGap(368, 368, 368))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPath)
-                    .addComponent(jButton1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(lbThongBao)))
-                .addContainerGap(25, Short.MAX_VALUE))
-        );
+        add(jPanel1);
+        jPanel1.setBounds(12, 104, 329, 330);
+
+        jLabel6.setText("Chọn Lớp ");
+        add(jLabel6);
+        jLabel6.setBounds(376, 107, 70, 16);
+
+        cbLop.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLopItemStateChanged(evt);
+            }
+        });
+        add(cbLop);
+        cbLop.setBounds(490, 100, 196, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -313,7 +300,7 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
         lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnThemSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSVActionPerformed
          tbSinhVien.getRowCount();
         try {
               ghiFile(path);
@@ -325,18 +312,32 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
           } catch (IOException ex) {
               Logger.getLogger(DSSinhVienWindow.class.getName()).log(Level.SEVERE, null, ex);
           }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnThemSVActionPerformed
+
+    private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
+       String name=cbLop.getSelectedItem().toString();
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+".csv";
+
+       // JOptionPane.showMessageDialog(cbLop,file);
+        try {
+            docFile(file);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbLopItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnThemSV;
+    private javax.swing.JComboBox cbLop;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbPath;
