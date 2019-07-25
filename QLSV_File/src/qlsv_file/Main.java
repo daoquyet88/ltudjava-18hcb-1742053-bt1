@@ -24,6 +24,11 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         showPanel(new DSSinhVienWindow());
     }
+     public Main(String maDangNhap) throws IOException {
+        initComponents();
+        showPanel(new DSSinhVienWindow());
+        lbmaDangNhap.setText(maDangNhap);
+    }
     public void showPanel(JPanel panel)
     {
         childPanel=panel;
@@ -47,14 +52,13 @@ public class Main extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        lbmaDangNhap = new javax.swing.JLabel();
         pnMain = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
@@ -97,10 +101,15 @@ public class Main extends javax.swing.JFrame {
         jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
         jButton4.setText("Quản Lý Sinh Viên");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
 
-        jButton5.setText("Sinh Viên");
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, 126, -1));
+        lbmaDangNhap.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel1.add(lbmaDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, 100, 30));
 
         pnMain.setLayout(new java.awt.BorderLayout());
 
@@ -113,15 +122,12 @@ public class Main extends javax.swing.JFrame {
         jMenu3.setText("Tài Khoản");
 
         jMenuItem2.setText("Đăng Xuất");
-        jMenu3.add(jMenuItem2);
-
-        jMenuItem3.setText("Đăng Nhập");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem3);
+        jMenu3.add(jMenuItem2);
 
         jMenuItem4.setText("Thông Tin Tài Khoản");
         jMenu3.add(jMenuItem4);
@@ -164,10 +170,6 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnQL_LopActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             showPanel(new ThoiKhoaBieuWindow());
@@ -191,6 +193,16 @@ public class Main extends javax.swing.JFrame {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       Login lg=new Login();
+       lg.show(true);
+       this.hide();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,13 +242,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnQL_Lop;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -244,9 +256,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbmaDangNhap;
     private javax.swing.JPanel pnMain;
     // End of variables declaration//GEN-END:variables
 }
