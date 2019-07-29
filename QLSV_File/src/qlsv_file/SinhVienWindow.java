@@ -5,6 +5,13 @@
  */
 package qlsv_file;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -14,8 +21,48 @@ public class SinhVienWindow extends javax.swing.JPanel {
     /**
      * Creates new form SinhVienWindow
      */
-    public SinhVienWindow() {
+    String maDangNhap="";
+    public SinhVienWindow() throws IOException {
         initComponents();
+        
+    }
+    public SinhVienWindow(String ma) throws IOException {
+        initComponents();
+        maDangNhap=ma;
+        load();
+        //JOptionPane.showMessageDialog(this,maDangNhap);
+    }
+    public void load() throws IOException{
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\18hcb_CTT001_KQ.csv";
+        docFileMaSV(file);
+    }
+     public void docFileMaSV(String p) throws FileNotFoundException, IOException{
+        DefaultTableModel dtm=new DefaultTableModel();     
+         
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        String [] NameSV;
+        String []dataSV;
+        String line = br.readLine();
+        NameSV=line.split(",");
+        for(int i=0;i<NameSV.length;i++){
+            dtm.addColumn(String.valueOf(NameSV[i]));
+        }         
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+              if(dataSV[1].equals(maDangNhap)){
+                  
+                 dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4],dataSV[5],dataSV[6]});
+               break;
+              }
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+         this.tbBangDiem.setModel(dtm);
+        this.tbBangDiem.repaint();
+        this.tbBangDiem.revalidate();
     }
 
     /**
@@ -28,10 +75,6 @@ public class SinhVienWindow extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        lbMSSV = new javax.swing.JLabel();
-        lbHoTen = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbBangDiem = new javax.swing.JTable();
 
@@ -39,14 +82,6 @@ public class SinhVienWindow extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Thông Tin Sinh Viên");
-
-        jLabel2.setText("MSSV");
-
-        jLabel3.setText("Họ Tên");
-
-        lbMSSV.setText("jLabel4");
-
-        lbHoTen.setText("jLabel4");
 
         tbBangDiem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -69,15 +104,6 @@ public class SinhVienWindow extends javax.swing.JPanel {
                 .addGap(310, 310, 310)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel2)
-                .addGap(66, 66, 66)
-                .addComponent(lbMSSV)
-                .addGap(129, 129, 129)
-                .addComponent(jLabel3)
-                .addGap(119, 119, 119)
-                .addComponent(lbHoTen))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -86,25 +112,16 @@ public class SinhVienWindow extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(lbMSSV)
-                    .addComponent(jLabel3)
-                    .addComponent(lbHoTen))
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbHoTen;
-    private javax.swing.JLabel lbMSSV;
     private javax.swing.JTable tbBangDiem;
     // End of variables declaration//GEN-END:variables
 }

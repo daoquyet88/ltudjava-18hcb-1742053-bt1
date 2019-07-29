@@ -26,6 +26,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    private String ad="";
     public Login() {
         initComponents();
         txtUse.setText("");
@@ -54,6 +55,7 @@ public class Login extends javax.swing.JFrame {
               dataSV=line.split(",");
                if (dataSV[0].toString().equals(txtUse.getText().toString())
                        &&dataSV[1].toString().equals(txtPass.getText().toString())){
+                   ad=dataSV[2];
                    return 1;
                }
               line =br.readLine();
@@ -157,7 +159,7 @@ public class Login extends javax.swing.JFrame {
             if(docFile(p)==1){
                 Main m;
                  try {
-                     m = new Main(txtUse.getText());
+                     m = new Main(txtUse.getText(),ad);
                       m.show(true);
                  } catch (IOException ex) {
                      Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

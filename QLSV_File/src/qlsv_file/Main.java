@@ -20,15 +20,32 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     private JPanel childPanel;
+    private String maDangNhap="";
+    private String ad="";
     public Main() throws IOException {
         initComponents();
-        showPanel(new DSSinhVienWindow());
+        //showPanel(new DSSinhVienWindow());
     }
-     public Main(String maDangNhap) throws IOException {
+     public Main(String maDangNhap1,String ad1) throws IOException {
         initComponents();
-        showPanel(new DSSinhVienWindow());
-        lbmaDangNhap.setText(maDangNhap);
+        
+        lbmaDangNhap.setText(maDangNhap1);
+        maDangNhap=maDangNhap1;
+        ad=ad1;
+        load();
     }
+     public void load() throws IOException{
+         if(ad.equals("0")){
+             btnBD.setVisible(false);
+             btnDK.setVisible(false);
+             btnTKB.setVisible(false);
+             btnQL_Lop.setVisible(false);
+             showPanel(new SinhVienWindow(maDangNhap));
+         }else{
+             btnSV.setVisible(false);
+             showPanel(new DSSinhVienWindow());
+         }
+     }
     public void showPanel(JPanel panel)
     {
         childPanel=panel;
@@ -48,10 +65,10 @@ public class Main extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         btnQL_Lop = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnTKB = new javax.swing.JButton();
+        btnDK = new javax.swing.JButton();
+        btnBD = new javax.swing.JButton();
+        btnSV = new javax.swing.JButton();
         lbmaDangNhap = new javax.swing.JLabel();
         pnMain = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -76,37 +93,37 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel1.add(btnQL_Lop, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 122, -1));
 
-        jButton2.setText("Quản Lý Thời Khoá Biểu");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnTKB.setText("Quản Lý Thời Khoá Biểu");
+        btnTKB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnTKBActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        jPanel1.add(btnTKB, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
-        jButton3.setText("Quản Lý Đăng Ký");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnDK.setText("Quản Lý Đăng Ký");
+        btnDK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnDKActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
+        jPanel1.add(btnDK, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
-        jButton6.setText("Import Bảng Điểm");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnBD.setText("Import Bảng Điểm");
+        btnBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnBDActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
+        jPanel1.add(btnBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, -1, -1));
 
-        jButton4.setText("Quản Lý Sinh Viên");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnSV.setText("Thông Tin Sinh Viên");
+        btnSV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnSVActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
+        jPanel1.add(btnSV, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, -1, -1));
 
         lbmaDangNhap.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jPanel1.add(lbmaDangNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 20, 100, 30));
@@ -130,6 +147,11 @@ public class Main extends javax.swing.JFrame {
         jMenu3.add(jMenuItem2);
 
         jMenuItem4.setText("Thông Tin Tài Khoản");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuBar1.add(jMenu3);
@@ -170,29 +192,29 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnQL_LopActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnTKBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTKBActionPerformed
         try {
             showPanel(new ThoiKhoaBieuWindow());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnTKBActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnDKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDKActionPerformed
         try {
             showPanel(new DangKyWindow());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnDKActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBDActionPerformed
         try {
             showPanel(new BangDiemWindow());
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnBDActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
        Login lg=new Login();
@@ -200,9 +222,18 @@ public class Main extends javax.swing.JFrame {
        this.hide();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSVActionPerformed
+        try {
+            showPanel(new SinhVienWindow(maDangNhap));
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSVActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+       ThongTinSVFram ttsv=new ThongTinSVFram(maDangNhap);
+       ttsv.show(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,11 +276,11 @@ public class Main extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBD;
+    private javax.swing.JButton btnDK;
     private javax.swing.JButton btnQL_Lop;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnSV;
+    private javax.swing.JButton btnTKB;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

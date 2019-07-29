@@ -5,6 +5,8 @@
  */
 package qlsv_file;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -17,6 +19,13 @@ public class ThongTinSVFram extends javax.swing.JFrame {
     public ThongTinSVFram() {
         initComponents();
     }
+     public ThongTinSVFram( String maSV) {
+        initComponents();
+         JOptionPane.showMessageDialog(this, maSV);
+    }
+     public void docFile(){
+         
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,6 +57,11 @@ public class ThongTinSVFram extends javax.swing.JFrame {
         jLabel4.setText("Nhập Lại Mật Khẩu");
 
         jButton1.setText("Thay Đổi");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Thoát");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -122,6 +136,10 @@ public class ThongTinSVFram extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
     /**
      * @param args the command line arguments
      */

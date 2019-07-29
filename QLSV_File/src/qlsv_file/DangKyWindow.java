@@ -239,6 +239,11 @@ public class DangKyWindow extends javax.swing.JPanel {
         });
 
         jButton3.setText("Reset");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -466,6 +471,15 @@ public class DangKyWindow extends javax.swing.JPanel {
                if(dataSV[1].toString().equals(mssv)){
                    txtHoTen.setText(dataSV[2].toString());
                    txtCMND.setText(dataSV[4].toString());
+                   if(dataSV[3].toString().equals("Nam")){
+                       //rdNam.isSelected();
+                       rdNam.setSelected(true);
+                       
+                   }
+                   else{
+                       //rdNu.isSelected();
+                       rdNu.setSelected(true);
+                   }
                    break;
                }
             try {
@@ -544,6 +558,13 @@ public class DangKyWindow extends javax.swing.JPanel {
             Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnThemSVActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        txtHoTen.setText("");
+        txtCMND.setText("");
+        txtMSSV.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
