@@ -5,7 +5,21 @@
  */
 package qlsv_file;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,17 +30,99 @@ public class ThongTinSVFram extends javax.swing.JFrame {
     /**
      * Creates new form ThongTinSVFram
      */
+    private String pass="";
+    private  String passCu="";
+    private  String ad="";
+    private String mssv="";
     public ThongTinSVFram() {
         initComponents();
     }
      public ThongTinSVFram( String maSV) {
         initComponents();
          JOptionPane.showMessageDialog(this, maSV);
+         mssv=maSV;
     }
-     public void docFile(){
+    public boolean docFile(String p) throws FileNotFoundException, IOException{
+        
+        //DefaultTableModel dtm=new DefaultTableModel();       
          
-     }
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        //String [] NameSV;
+        String []dataSV;
+        String line = br.readLine();
+        //NameSV=line.split(",");
+//        for(int i=0;i<NameSV.length;i++){
+//            dtm.addColumn(String.valueOf(NameSV[i]));
+//        }         
+      line = br.readLine();
+          while(line != null){
+              
+              dataSV=line.split(",");
+              if(dataSV[1].toString().equals(passCu)){
+                  ad=dataSV[2].toString();
+                  passCu=dataSV[1].toString();
+                  return true;
+              }
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+        return false;
+    }
+    public void ghiFile(String p){       
+    
+       //String dk=txtPassNew.getText();
+       String dongSua=mssv+","+pass+","+ad;
+       String dongCu=mssv+","+passCu+","+ad;
+      // JOptionPane.showMessageDialog(thoat, dongSua);
+       //String p=lineAll;
+       //JOptionPane.showMessageDialog(thoat,p);
+         String dataSV[];
+         try{
+            ArrayList<String> ar=new ArrayList<String>();
+            FileReader fr = new FileReader(p);
+            BufferedReader br = new BufferedReader(fr);
+            String  line = br.readLine();            
+              while(line != null){
+                  ar.add(line);
+                  line =br.readLine();
+              }
+            br.close();
+            fr.close();
 
+            FileWriter fw = new FileWriter(p);
+            BufferedWriter bw = new BufferedWriter(fw);  
+            for(String s : ar){
+                if(s.equals(dongCu))
+                {
+                      bw.write(dongSua);
+                      bw.newLine();
+                      continue;
+                }
+                else{
+                    bw.write(s);
+                    bw.newLine();
+                }
+            }
+            bw.close();
+            fw.close();
+            JOptionPane.showMessageDialog(this,"Sửa Điểm Thành Công :");
+         }
+         catch(Exception e){
+             
+         }
+    }
+     public  String mahoaMD5(String srcText) throws NoSuchAlgorithmException, UnsupportedEncodingException 
+     {
+         String enrText ;
+         MessageDigest msd = MessageDigest.getInstance("MD5");
+         byte[] srcTextBytes = srcText.getBytes("UTF-8");
+         byte[] enrTexyBytes = msd.digest(srcTextBytes);
+         BigInteger bigInt = new BigInteger(1,enrTexyBytes);
+         enrText = bigInt.toString(16);
+         return  enrText;
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,7 +233,30 @@ public class ThongTinSVFram extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+        try {
+            passCu=mahoaMD5(txtPass.getText().toString());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ThongTinSVFram.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ThongTinSVFram.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            pass=mahoaMD5(txtPassNew.getText().toString());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ThongTinSVFram.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ThongTinSVFram.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String p="C:\\Users\\Admin\\Desktop\\File CSV\\login.csv";
+        try {
+            if(docFile(p)){
+                ghiFile(p);
+                
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ThongTinSVFram.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ghiFile(ad);
     }//GEN-LAST:event_jButton1ActionPerformed
     
     /**

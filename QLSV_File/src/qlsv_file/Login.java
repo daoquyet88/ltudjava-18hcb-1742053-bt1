@@ -42,11 +42,12 @@ public class Login extends javax.swing.JFrame {
          enrText = bigInt.toString(16);
          return  enrText;
      }
-     public int docFile(String p) throws FileNotFoundException, IOException{
+     public int docFile(String p) throws FileNotFoundException, IOException, NoSuchAlgorithmException{
             
          
         FileReader fr = new FileReader(p);
         BufferedReader br = new BufferedReader(fr);
+        String pass=mahoaMD5(txtPass.getText().toString());
         String [] NameSV;
         String []dataSV;
         String line = br.readLine();
@@ -54,7 +55,7 @@ public class Login extends javax.swing.JFrame {
           while(line != null){
               dataSV=line.split(",");
                if (dataSV[0].toString().equals(txtUse.getText().toString())
-                       &&dataSV[1].toString().equals(txtPass.getText().toString())){
+                       &&dataSV[1].toString().equals(pass)){
                    ad=dataSV[2];
                    return 1;
                }
@@ -92,6 +93,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton2.setText("Thoát");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Đăng Nhập Vào Hệ Thống :");
 
@@ -156,27 +162,40 @@ public class Login extends javax.swing.JFrame {
        //JOptionPane.showMessageDialog(this,txtPass.getText());
         String p="C:\\Users\\Admin\\Desktop\\File CSV\\login.csv";
         try{
-            if(docFile(p)==1){
-                Main m;
-                 try {
-                     m = new Main(txtUse.getText(),ad);
-                      m.show(true);
-                 } catch (IOException ex) {
-                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-
-                this.hide();
+            try {
+                if(docFile(p)==1){
+                    Main m;
+                    try {
+                        m = new Main(txtUse.getText(),ad);
+                        m.show(true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    this.hide();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this,"Tai khoan khong dung");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-            else{
-                 JOptionPane.showMessageDialog(this,"Tai khoan khong dung");
-            }
+        }
+        catch(Exception e){
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    catch( Exception e){
-        
-    }
 
-}
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+                this.setVisible(false);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    
+
+
     /**
      * @param args the command line arguments
      */

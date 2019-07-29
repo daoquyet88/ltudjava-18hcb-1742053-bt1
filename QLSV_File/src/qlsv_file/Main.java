@@ -24,7 +24,7 @@ public class Main extends javax.swing.JFrame {
     private String ad="";
     public Main() throws IOException {
         initComponents();
-        //showPanel(new DSSinhVienWindow());
+        showPanel(new DSSinhVienWindow());
     }
      public Main(String maDangNhap1,String ad1) throws IOException {
         initComponents();
