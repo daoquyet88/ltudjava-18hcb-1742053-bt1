@@ -211,6 +211,11 @@ public class BangDiemWindow extends javax.swing.JPanel {
                 cbLopItemStateChanged(evt);
             }
         });
+        cbLop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLopActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Môn Học");
 
@@ -457,6 +462,10 @@ public class BangDiemWindow extends javax.swing.JPanel {
         lbdaupt.setText(String.valueOf(kq1)+"%");
         lbrotpt.setText(String.valueOf(kq2)+"%");
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void cbLopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLopActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbLopActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

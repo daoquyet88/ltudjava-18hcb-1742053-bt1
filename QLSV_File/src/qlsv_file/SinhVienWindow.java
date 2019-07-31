@@ -6,9 +6,13 @@
 package qlsv_file;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,12 +20,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
+
 public class SinhVienWindow extends javax.swing.JPanel {
 
     /**
      * Creates new form SinhVienWindow
      */
     String maDangNhap="";
+     String path="";
+    String lineAll;
     public SinhVienWindow() throws IOException {
         initComponents();
         
@@ -33,11 +40,19 @@ public class SinhVienWindow extends javax.swing.JPanel {
         //JOptionPane.showMessageDialog(this,maDangNhap);
     }
     public void load() throws IOException{
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\18hcb_CTT001_KQ.csv";
-        docFileMaSV(file);
+           String file="C:\\Users\\Admin\\Desktop\\File CSV\\18hcb_CTT001_KQ.csv";
+//        path=file;
+//        lineAll=file;
+        File f=new File(file);
+        String nameFile=f.getName();
+       // lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên: "+nameFile);
+        docFile(file);
+        String lh="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+        docFileLH(lh);
+        
     }
-     public void docFileMaSV(String p) throws FileNotFoundException, IOException{
-        DefaultTableModel dtm=new DefaultTableModel();     
+    public void docFile(String p) throws FileNotFoundException, IOException{
+        DefaultTableModel dtm=new DefaultTableModel();       
          
         FileReader fr = new FileReader(p);
         BufferedReader br = new BufferedReader(fr);
@@ -51,10 +66,9 @@ public class SinhVienWindow extends javax.swing.JPanel {
         line = br.readLine();
           while(line != null){
               dataSV=line.split(",");
-              if(dataSV[1].equals(maDangNhap)){
-                  
-                 dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4],dataSV[5],dataSV[6]});
-               break;
+              if(dataSV[1].toString().equals(maDangNhap)){
+                dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4],dataSV[5],dataSV[6]});              
+                
               }
               line =br.readLine();
           }
@@ -64,7 +78,44 @@ public class SinhVienWindow extends javax.swing.JPanel {
         this.tbBangDiem.repaint();
         this.tbBangDiem.revalidate();
     }
+    public void loadcb1(String p) throws FileNotFoundException, IOException{
+        
+         DefaultComboBoxModel model=new DefaultComboBoxModel();
+      
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);
+        
+        String []dataSV;
+        String line = br.readLine();
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+               model.addElement(new MonHoc(dataSV[1],dataSV[2]));
+               //cbDSMH.addItem(dataSV[2].toString());
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
 
+        cbMonHoc.setModel(model);
+    }
+    public void docFileLH(String p) throws FileNotFoundException, IOException{
+       
+        FileReader fr = new FileReader(p);
+        BufferedReader br = new BufferedReader(fr);        
+        String []dataSV;
+        String line = br.readLine();      
+          
+        line = br.readLine();
+          while(line != null){
+              dataSV=line.split(",");
+              cbLop.addItem(dataSV[0]);
+              line =br.readLine();
+          }
+        br.close();
+        fr.close();
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,9 +135,12 @@ public class SinhVienWindow extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 255, 204));
+        setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Thông Tin Sinh Viên");
+        add(jLabel1);
+        jLabel1.setBounds(310, 30, 210, 40);
 
         tbBangDiem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,51 +155,66 @@ public class SinhVienWindow extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tbBangDiem);
 
+        add(jScrollPane1);
+        jScrollPane1.setBounds(20, 169, 850, 330);
+
         jLabel2.setText("Chọn Lớp ");
+        add(jLabel2);
+        jLabel2.setBounds(33, 92, 70, 16);
+
+        cbLop.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbLopItemStateChanged(evt);
+            }
+        });
+        add(cbLop);
+        cbLop.setBounds(136, 89, 137, 22);
 
         jLabel3.setText("Môn Học");
+        add(jLabel3);
+        jLabel3.setBounds(356, 92, 49, 16);
+
+        add(cbMonHoc);
+        cbMonHoc.setBounds(416, 89, 180, 22);
 
         jButton1.setText("Xem Điểm Môn Học");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 970, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel2)
-                .addGap(46, 46, 46)
-                .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
-                .addComponent(jLabel3)
-                .addGap(69, 69, 69)
-                .addComponent(cbMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120)
-                .addComponent(jButton1))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cbLop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1);
+        jButton1.setBounds(706, 88, 145, 25);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\";
+        String nameLop=cbLop.getSelectedItem().toString();
+        //lopHoc=nameLop;
+        String nameDSMH=nameLop+"_TKB.csv";
+        file=file+nameDSMH;
+        //JOptionPane.showMessageDialog(cbLop,file);
+        if(nameDSMH!=null){
+            try {
+                loadcb1(file);
+            } catch (IOException ex) {
+                Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_cbLopItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String ma=((MonHoc)cbMonHoc.getSelectedItem()).getMaMH();
+        String name=cbLop.getSelectedItem().toString();
+        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_"+ma+"_KQ.csv";
+        lineAll=file;
+       JOptionPane.showMessageDialog(cbLop,file);
+        try {
+            docFile(file);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
