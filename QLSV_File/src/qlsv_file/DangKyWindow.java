@@ -8,10 +8,12 @@ package qlsv_file;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,8 +42,11 @@ public class DangKyWindow extends javax.swing.JPanel {
         
          DefaultComboBoxModel model=new DefaultComboBoxModel();
       
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
+         File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
         
         String []dataSV;
         String line = br.readLine();
@@ -53,7 +58,7 @@ public class DangKyWindow extends javax.swing.JPanel {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+        //fr.close();
 
         cbDSMH.setModel(model);
     }
@@ -66,8 +71,11 @@ public class DangKyWindow extends javax.swing.JPanel {
     }
     public void docFileLH(String p) throws FileNotFoundException, IOException{
        
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);        
+         File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));        
         String []dataSV;
         String line = br.readLine();      
           
@@ -78,14 +86,17 @@ public class DangKyWindow extends javax.swing.JPanel {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+        //fr.close();
         
     }
      public void docFile(String p) throws FileNotFoundException, IOException{
         DefaultTableModel dtm=new DefaultTableModel();       
          
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
+        File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
         String [] NameSV;
         String []dataSV;
         String line = br.readLine();
@@ -100,7 +111,7 @@ public class DangKyWindow extends javax.swing.JPanel {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+        //fr.close();
          this.tbMonHoc.setModel(dtm);
         this.tbMonHoc.repaint();
         this.tbMonHoc.revalidate();
@@ -108,9 +119,11 @@ public class DangKyWindow extends javax.swing.JPanel {
      public void docFileDSMH(String p) throws FileNotFoundException, IOException{
    
          cbDSMH.removeAllItems();
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
-        
+        File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
         String []dataSV;
         String line = br.readLine();
         line = br.readLine();
@@ -121,7 +134,7 @@ public class DangKyWindow extends javax.swing.JPanel {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+        //fr.close();
 //         this.tbMonHoc.setModel(dtm);
 //        this.tbMonHoc.repaint();
 //        this.tbMonHoc.revalidate();

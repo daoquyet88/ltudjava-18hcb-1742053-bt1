@@ -7,10 +7,13 @@ package qlsv_file;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -46,8 +49,11 @@ public class ThongTinSVFram extends javax.swing.JFrame {
         
         //DefaultTableModel dtm=new DefaultTableModel();       
          
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
+        File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
         //String [] NameSV;
         String []dataSV;
         String line = br.readLine();
@@ -67,7 +73,7 @@ public class ThongTinSVFram extends javax.swing.JFrame {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+       //fr.close();
         return false;
     }
     public void ghiFile(String p){       
@@ -81,15 +87,18 @@ public class ThongTinSVFram extends javax.swing.JFrame {
          String dataSV[];
          try{
             ArrayList<String> ar=new ArrayList<String>();
-            FileReader fr = new FileReader(p);
-            BufferedReader br = new BufferedReader(fr);
+            File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
             String  line = br.readLine();            
               while(line != null){
                   ar.add(line);
                   line =br.readLine();
               }
             br.close();
-            fr.close();
+            //fr.close();
 
             FileWriter fw = new FileWriter(p);
             BufferedWriter bw = new BufferedWriter(fw);  
@@ -247,7 +256,7 @@ public class ThongTinSVFram extends javax.swing.JFrame {
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(ThongTinSVFram.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String p="C:\\Users\\Admin\\Desktop\\File CSV\\login.csv";
+        String p="D:\\File CSV\\login.csv";
         try {
             if(docFile(p)){
                 ghiFile(p);

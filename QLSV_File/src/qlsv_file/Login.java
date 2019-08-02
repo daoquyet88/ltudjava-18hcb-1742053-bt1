@@ -6,9 +6,12 @@
 package qlsv_file;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -45,8 +48,11 @@ public class Login extends javax.swing.JFrame {
      public int docFile(String p) throws FileNotFoundException, IOException, NoSuchAlgorithmException{
             
          
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
+        File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
         String pass=mahoaMD5(txtPass.getText().toString());
         String [] NameSV;
         String []dataSV;
@@ -62,7 +68,7 @@ public class Login extends javax.swing.JFrame {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+       // fr.close();
         return 0;
         
     }

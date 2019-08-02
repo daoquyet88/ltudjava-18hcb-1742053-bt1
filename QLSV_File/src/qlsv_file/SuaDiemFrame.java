@@ -7,8 +7,11 @@ package qlsv_file;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -274,8 +277,11 @@ public class SuaDiemFrame extends javax.swing.JFrame {
          String dataSV[];
          try{
             ArrayList<String> ar=new ArrayList<String>();
-            FileReader fr = new FileReader(p);
-            BufferedReader br = new BufferedReader(fr);
+            File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
             String  line = br.readLine();
             
               while(line != null){
@@ -287,7 +293,7 @@ public class SuaDiemFrame extends javax.swing.JFrame {
 //                System.out.println("kq"+s);
 //            }
             br.close();
-            fr.close();
+           // fr.close();
 
             FileWriter fw = new FileWriter(p);
             BufferedWriter bw = new BufferedWriter(fw);  
