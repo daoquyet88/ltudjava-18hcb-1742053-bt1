@@ -160,6 +160,9 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        //JOptionPane.showMessageDialog(this,txtPass.getText());
+       if(txtUse.getText().equals("")||txtPass.getText().equals("")){
+            JOptionPane.showMessageDialog(this,"Nhập Đầy Đủ Thông Tin : ");
+       }else{
         String p="C:\\Users\\Admin\\Desktop\\File CSV\\login.csv";
         try{
             try {
@@ -185,6 +188,7 @@ public class Login extends javax.swing.JFrame {
         }
         catch(Exception e){
             
+        }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

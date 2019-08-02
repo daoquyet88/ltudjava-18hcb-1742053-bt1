@@ -7,9 +7,11 @@ package qlsv_file;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -27,8 +29,6 @@ public class SinhVienWindow extends javax.swing.JPanel {
      * Creates new form SinhVienWindow
      */
     String maDangNhap="";
-     String path="";
-    String lineAll;
     public SinhVienWindow() throws IOException {
         initComponents();
         
@@ -52,38 +52,19 @@ public class SinhVienWindow extends javax.swing.JPanel {
         
     }
     public void docFile(String p) throws FileNotFoundException, IOException{
-        DefaultTableModel dtm=new DefaultTableModel();       
-         
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
-        String [] NameSV;
-        String []dataSV;
-        String line = br.readLine();
-        NameSV=line.split(",");
-        for(int i=0;i<NameSV.length;i++){
-            dtm.addColumn(String.valueOf(NameSV[i]));
-        }         
-        line = br.readLine();
-          while(line != null){
-              dataSV=line.split(",");
-              if(dataSV[1].toString().equals(maDangNhap)){
-                dtm.addRow(new Object[]{dataSV[0],dataSV[1],dataSV[2],dataSV[3],dataSV[4],dataSV[5],dataSV[6]});              
-                
-              }
-              line =br.readLine();
-          }
-        br.close();
-        fr.close();
-         this.tbBangDiem.setModel(dtm);
-        this.tbBangDiem.repaint();
-        this.tbBangDiem.revalidate();
+        
     }
     public void loadcb1(String p) throws FileNotFoundException, IOException{
         
          DefaultComboBoxModel model=new DefaultComboBoxModel();
       
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);
+        File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));
+		        
+        //BufferedReader br = new BufferedReader(fr);
         
         String []dataSV;
         String line = br.readLine();
@@ -95,14 +76,17 @@ public class SinhVienWindow extends javax.swing.JPanel {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+       // fileDir.close();
 
         cbMonHoc.setModel(model);
     }
     public void docFileLH(String p) throws FileNotFoundException, IOException{
        
-        FileReader fr = new FileReader(p);
-        BufferedReader br = new BufferedReader(fr);        
+       File fileDir = new File(p);
+			
+		BufferedReader br = new BufferedReader(
+		   new InputStreamReader(
+                      new FileInputStream(fileDir), "UTF8"));      
         String []dataSV;
         String line = br.readLine();      
           
@@ -113,7 +97,7 @@ public class SinhVienWindow extends javax.swing.JPanel {
               line =br.readLine();
           }
         br.close();
-        fr.close();
+       // fr.close();
         
     }
     /**
@@ -204,16 +188,7 @@ public class SinhVienWindow extends javax.swing.JPanel {
     }//GEN-LAST:event_cbLopItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String ma=((MonHoc)cbMonHoc.getSelectedItem()).getMaMH();
-        String name=cbLop.getSelectedItem().toString();
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_"+ma+"_KQ.csv";
-        lineAll=file;
-       JOptionPane.showMessageDialog(cbLop,file);
-        try {
-            docFile(file);
-        } catch (IOException ex) {
-            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
