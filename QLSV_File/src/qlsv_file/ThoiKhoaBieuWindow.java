@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
@@ -42,6 +43,37 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         String nameFile=f.getName();
         lbThongBao.setText("Thông Tin Môn Học Lớp : "+nameFile);
        
+    }
+    public void taoFileLopMH(String p) throws UnsupportedEncodingException, FileNotFoundException, IOException{
+        String tenLop="";
+        File fileDir = new File(p);			
+        BufferedReader br = new BufferedReader(
+           new InputStreamReader(
+              new FileInputStream(fileDir), "UTF8"));  
+        String [] dt;
+        dt=p.split("\\_");
+        tenLop=dt[0].toString();
+        String fileOld=dt[0].toString()+".csv";
+        Path cu=Paths.get(fileOld);
+        String []dataSV;
+        String line = br.readLine();    
+        line = br.readLine();
+        String fileNew="";
+        String tf="";
+        Path moi;
+          while(line != null){              
+              dataSV=line.split(",");
+              fileNew=tenLop+"_"+dataSV[1]+".csv";
+              moi=Paths.get(fileNew);              
+              copyFile(cu,moi);            
+              
+              line =br.readLine();
+          }
+        br.close();
+        //fr.close();
+        
+    
+        
     }
     public void docFileLH(String p) throws FileNotFoundException, IOException{
        
@@ -110,7 +142,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         lbThongBao = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnimport = new javax.swing.JButton();
         lbDuongDan = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -130,10 +162,10 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
 
         jLabel2.setText("Chọn File Thời Khoá Biểu :");
 
-        jButton1.setText("Import File ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnimport.setText("Import File ");
+        btnimport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnimportActionPerformed(evt);
             }
         });
 
@@ -149,7 +181,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnimport, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lbDuongDan)))
@@ -161,7 +193,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel2)
                 .addGap(26, 26, 26)
-                .addComponent(jButton1)
+                .addComponent(btnimport)
                 .addGap(41, 41, 41)
                 .addComponent(lbDuongDan)
                 .addContainerGap(239, Short.MAX_VALUE))
@@ -222,7 +254,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         jPanel3.setBounds(340, 60, 640, 420);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnimportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimportActionPerformed
         
         JFileChooser file =new JFileChooser();
        file.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -269,7 +301,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
 			e.printStackTrace();
 		}
             docFile(fileKT);
-            //ghiFileLopHoc("D:\\File CSV\\dslop.csv",data[0]);
+            taoFileLopMH(fileKT);
         }
             
         } catch (IOException ex) {
@@ -278,7 +310,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         File f=new File(path);
         String nameFile=f.getName();
         lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnimportActionPerformed
 
     private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
       
@@ -290,7 +322,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
             try {
                 docFile(file);
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(cbLop, "File ko ton tai");
+                JOptionPane.showMessageDialog(cbLop, "Lop chua co thoi khoa bieu");
             }
         }
 
@@ -298,8 +330,8 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnimport;
     private javax.swing.JComboBox cbLop;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

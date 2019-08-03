@@ -90,8 +90,8 @@ public class DangKyWindow extends javax.swing.JPanel {
         
     }
      public void docFile(String p) throws FileNotFoundException, IOException{
-        DefaultTableModel dtm=new DefaultTableModel();       
-         
+        DefaultTableModel dtm=new DefaultTableModel();      
+        
         File fileDir = new File(p);
 			
 		BufferedReader br = new BufferedReader(
@@ -158,12 +158,13 @@ public class DangKyWindow extends javax.swing.JPanel {
                gioiTinh="Nu";
           }
           JOptionPane.showMessageDialog(cbLop,gioiTinh);
-//          String cmnd=txtCMND.getText(); 
-//          bw.newLine();
-//          bw.write(stt+","+mssv+","+hoTen+","+gioiTinh+","+cmnd);             
+          String cmnd=txtCMND.getText();          
+          bw.write(stt+","+mssv+","+hoTen+","+gioiTinh+","+cmnd); 
+           bw.newLine();
           bw.close();
           fw.close();
-         //JOptionPane.showMessageDialog(this,"Thêm Sinh Viên Thành Công");                 
+         JOptionPane.showMessageDialog(this,"Thêm Sinh Viên Thành Công");  
+            docFile(p);
          }catch(Exception e){
           JOptionPane.showMessageDialog(this,"Thêm Thất Bại"+e);
       }
@@ -450,7 +451,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         String name=cbLop.getSelectedItem().toString();
         String file="D:\\File CSV\\"+name+"_"+ma+".csv";
         lineAll=file;
-       // JOptionPane.showMessageDialog(cbLop,file);
+        JOptionPane.showMessageDialog(cbLop,file);
         try {
             docFile(file);
         } catch (IOException ex) {

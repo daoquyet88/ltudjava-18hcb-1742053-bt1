@@ -42,7 +42,7 @@ public class ThongTinSVFram extends javax.swing.JFrame {
     }
      public ThongTinSVFram( String maSV) {
         initComponents();
-         JOptionPane.showMessageDialog(this, maSV);
+         //JOptionPane.showMessageDialog(this, maSV);
          mssv=maSV;
     }
     public boolean docFile(String p) throws FileNotFoundException, IOException{
@@ -116,7 +116,7 @@ public class ThongTinSVFram extends javax.swing.JFrame {
             }
             bw.close();
             fw.close();
-            JOptionPane.showMessageDialog(this,"Sửa Điểm Thành Công :");
+            JOptionPane.showMessageDialog(this,"Đổi Mật Khẩu Thành Công :");
          }
          catch(Exception e){
              

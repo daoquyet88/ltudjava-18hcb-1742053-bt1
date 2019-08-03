@@ -445,7 +445,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
         try {
             docFile(file);
         } catch (IOException ex) {
-            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(cbLop,"chua co bang diem");
         }
     }//GEN-LAST:event_btnTimKiemActionPerformed
 

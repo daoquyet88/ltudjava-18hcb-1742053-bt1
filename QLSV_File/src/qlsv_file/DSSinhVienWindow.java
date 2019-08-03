@@ -410,6 +410,7 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
                        try {
             String name = cbLop.getSelectedItem().toString();
             String file = "D:\\File CSV\\" + name + ".csv";
+            path=file;
             //JOptionPane.showMessageDialog(cbLop, name);
             docFile(file);
         } catch (IOException ex) {

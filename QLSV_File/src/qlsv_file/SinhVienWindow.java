@@ -232,7 +232,7 @@ public class SinhVienWindow extends javax.swing.JPanel {
         String maMonHoc=((MonHoc)cbMonHoc.getSelectedItem()).getMaMH();
         String file="D:\\File CSV\\"+maLop+"_"+maMonHoc+"_KQ.csv";
        // lineAll=file;
-        JOptionPane.showMessageDialog(cbLop,file);
+        //JOptionPane.showMessageDialog(cbLop,file);
         try {
             docFile(file);
         } catch (IOException ex) {
