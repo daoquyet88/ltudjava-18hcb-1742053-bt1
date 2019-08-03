@@ -40,19 +40,53 @@ public class SinhVienWindow extends javax.swing.JPanel {
         //JOptionPane.showMessageDialog(this,maDangNhap);
     }
     public void load() throws IOException{
-           String file="C:\\Users\\Admin\\Desktop\\File CSV\\18hcb_CTT001_KQ.csv";
+        try {
+         // String file="D:\\File CSV\\18hcb_CTT001_KQ.csv";
 //        path=file;
 //        lineAll=file;
-        File f=new File(file);
-        String nameFile=f.getName();
+       // File f=new File(file);
+        //String nameFile=f.getName();
        // lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên: "+nameFile);
-        docFile(file);
-        String lh="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+       // docFile(file);
+        String lh="D:\\File CSV\\dslop.csv";
         docFileLH(lh);
         
+            
+        } catch (Exception e) {
+        }
+     
     }
     public void docFile(String p) throws FileNotFoundException, IOException{
-        
+        DefaultTableModel dtm = new DefaultTableModel();
+
+        File fileDir = new File(p);
+
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(
+                        new FileInputStream(fileDir), "UTF8"));
+        String[] NameSV;
+        String[] dataSV;
+        String line = br.readLine();
+        NameSV = line.split(",");
+        for (int i = 0; i < NameSV.length; i++) {
+            dtm.addColumn(String.valueOf(NameSV[i]));
+        }
+        line = br.readLine();
+        while (line != null) {
+            dataSV = line.split(",");
+                if(dataSV[1].toString().equals(maDangNhap)){
+                    dtm.addRow(new Object[]{dataSV[0], dataSV[1], dataSV[2], dataSV[3], dataSV[4],dataSV[5],dataSV[6]});
+                }
+                
+            line = br.readLine();
+        }       
+
+        br.close();
+        //fr.close();
+
+        this.tbBangDiem.setModel(dtm);
+        this.tbBangDiem.repaint();
+        this.tbBangDiem.revalidate();
     }
     public void loadcb1(String p) throws FileNotFoundException, IOException{
         
@@ -116,7 +150,7 @@ public class SinhVienWindow extends javax.swing.JPanel {
         cbLop = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         cbMonHoc = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
+        btnXemDiem = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 255, 204));
         setLayout(null);
@@ -158,26 +192,31 @@ public class SinhVienWindow extends javax.swing.JPanel {
         add(jLabel3);
         jLabel3.setBounds(356, 92, 49, 16);
 
+        cbMonHoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbMonHocActionPerformed(evt);
+            }
+        });
         add(cbMonHoc);
         cbMonHoc.setBounds(416, 89, 180, 22);
 
-        jButton1.setText("Xem Điểm Môn Học");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnXemDiem.setText("Xem Điểm Môn Học");
+        btnXemDiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnXemDiemActionPerformed(evt);
             }
         });
-        add(jButton1);
-        jButton1.setBounds(706, 88, 145, 25);
+        add(btnXemDiem);
+        btnXemDiem.setBounds(706, 88, 145, 25);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\";
+        String file="D:\\File CSV\\";
         String nameLop=cbLop.getSelectedItem().toString();
         //lopHoc=nameLop;
         String nameDSMH=nameLop+"_TKB.csv";
         file=file+nameDSMH;
-        //JOptionPane.showMessageDialog(cbLop,file);
+       //JOptionPane.showMessageDialog(cbLop,file);
         if(nameDSMH!=null){
             try {
                 loadcb1(file);
@@ -187,15 +226,29 @@ public class SinhVienWindow extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbLopItemStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnXemDiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemDiemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        String maLop=cbLop.getSelectedItem().toString();
+        String maMonHoc=((MonHoc)cbMonHoc.getSelectedItem()).getMaMH();
+        String file="D:\\File CSV\\"+maLop+"_"+maMonHoc+"_KQ.csv";
+       // lineAll=file;
+        JOptionPane.showMessageDialog(cbLop,file);
+        try {
+            docFile(file);
+        } catch (IOException ex) {
+            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnXemDiemActionPerformed
+
+    private void cbMonHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMonHocActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbMonHocActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnXemDiem;
     private javax.swing.JComboBox cbLop;
     private javax.swing.JComboBox cbMonHoc;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

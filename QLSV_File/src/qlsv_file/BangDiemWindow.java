@@ -39,14 +39,14 @@ public class BangDiemWindow extends javax.swing.JPanel {
         pnPhanTram.setVisible(false);
     }
     public void load() throws IOException{
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\18hcb_CTT001_KQ.csv";
+        String file="D:\\File CSV\\18hcb_CTT001_KQ.csv";
         path=file;
         lineAll=file;
         File f=new File(file);
         String nameFile=f.getName();
         lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên: "+nameFile);
         docFile(file);
-        String lh="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+        String lh="D:\\File CSV\\dslop.csv";
         docFileLH(lh);
         
     }
@@ -421,7 +421,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
         cbDSMH.setModel(model);
     }
     private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
-       String file="C:\\Users\\Admin\\Desktop\\File CSV\\";
+       String file="D:\\File CSV\\";
         String nameLop=cbLop.getSelectedItem().toString();
         //lopHoc=nameLop;
         String nameDSMH=nameLop+"_TKB.csv";
@@ -439,7 +439,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
          String ma=((MonHoc)cbDSMH.getSelectedItem()).getMaMH();
         String name=cbLop.getSelectedItem().toString();
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_"+ma+"_KQ.csv";
+        String file="D:\\File CSV\\"+name+"_"+ma+"_KQ.csv";
         lineAll=file;
        JOptionPane.showMessageDialog(cbLop,file);
         try {
@@ -471,8 +471,8 @@ public class BangDiemWindow extends javax.swing.JPanel {
         pnPhanTram.setVisible(true);
         lbdau.setText(String.valueOf(hon5));
         lbrot.setText(String.valueOf(kem5));
-        double kq1=(hon5/tongHS)*100;
-        double kq2=(kem5/tongHS)*100;
+        double kq1=Math.round((hon5/tongHS)*100);
+        double kq2=Math.round((kem5/tongHS)*100);
         lbdaupt.setText(String.valueOf(kq1)+"%");
         lbrotpt.setText(String.valueOf(kq2)+"%");
     }//GEN-LAST:event_jButton3ActionPerformed

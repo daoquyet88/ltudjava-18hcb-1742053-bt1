@@ -12,10 +12,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static qlsv_file.DSSinhVienWindow.copyFile;
 
 /**
  *
@@ -32,7 +36,7 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         load();
     }
     public void load() throws IOException{
-         String file="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+         String file="D:\\File CSV\\dslop.csv";
          docFileLH(file);
          File f=new File(file);
         String nameFile=f.getName();
@@ -239,7 +243,35 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
         
         try {
             // TODO add your handling code here:
-            docFile(path);
+               // TODO add your handling code here:
+        String []data;
+        String fileGoc="D:\\File CSV\\";
+        File f=new File(path);
+        String name=f.getName();
+        data=name.split("\\.");
+        String fileName=f.getName();
+        String fileKT=fileGoc+fileName;
+        File fKT=new  File(fileKT);
+        if(fKT.exists()){
+            JOptionPane.showMessageDialog(cbLop,"File Da ton tai");
+        }
+        else{
+            JOptionPane.showMessageDialog(cbLop,"import Thành Công");
+            Path source = Paths.get(path);
+ 
+		// Destination file.
+		Path destination = Paths.get(fileKT);
+		
+		try {
+			copyFile(source, destination);
+		} catch (IOException e) {
+			System.out.println("Lỗi Khi copy File");
+			e.printStackTrace();
+		}
+            docFile(fileKT);
+            //ghiFileLopHoc("D:\\File CSV\\dslop.csv",data[0]);
+        }
+            
         } catch (IOException ex) {
             Logger.getLogger(DSSinhVienWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -249,15 +281,19 @@ public class ThoiKhoaBieuWindow extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
-        String name=cbLop.getSelectedItem().toString();
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_TKB.csv";
+      
+        if (cbLop.getSelectedItem() != null) {
+            String name = cbLop.getSelectedItem().toString();
+            String file = "D:\\File CSV\\" + name + "_TKB.csv";
 
-       // JOptionPane.showMessageDialog(cbLop,file);
-        try {
-            docFile(file);
-        } catch (IOException ex) {
-            Logger.getLogger(DangKyWindow.class.getName()).log(Level.SEVERE, null, ex);
+            // JOptionPane.showMessageDialog(cbLop,file);
+            try {
+                docFile(file);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(cbLop, "File ko ton tai");
+            }
         }
+
     }//GEN-LAST:event_cbLopItemStateChanged
 
 

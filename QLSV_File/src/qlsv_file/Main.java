@@ -32,7 +32,7 @@ public class Main extends javax.swing.JFrame {
         lbmaDangNhap.setText(maDangNhap1);
         maDangNhap=maDangNhap1;
         ad=ad1;
-        load();
+       load();
     }
      public void load() throws IOException{
          if(ad.equals("0")){

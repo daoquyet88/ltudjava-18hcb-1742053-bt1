@@ -48,11 +48,8 @@ public class Login extends javax.swing.JFrame {
      public int docFile(String p) throws FileNotFoundException, IOException, NoSuchAlgorithmException{
             
          
-        File fileDir = new File(p);
-			
-		BufferedReader br = new BufferedReader(
-		   new InputStreamReader(
-                      new FileInputStream(fileDir), "UTF8"));
+        FileReader fr=new  FileReader(p);
+        BufferedReader br=new  BufferedReader(fr);
         String pass=mahoaMD5(txtPass.getText().toString());
         String [] NameSV;
         String []dataSV;
@@ -68,7 +65,7 @@ public class Login extends javax.swing.JFrame {
               line =br.readLine();
           }
         br.close();
-       // fr.close();
+        fr.close();
         return 0;
         
     }
@@ -81,7 +78,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btnDangNhao = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -91,10 +88,10 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnDangNhao.setText("Login");
+        btnDangNhao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnDangNhaoActionPerformed(evt);
             }
         });
 
@@ -132,7 +129,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(99, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDangNhao, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -157,19 +154,19 @@ public class Login extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDangNhao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(46, 46, 46))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnDangNhaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhaoActionPerformed
        //JOptionPane.showMessageDialog(this,txtPass.getText());
        if(txtUse.getText().equals("")||txtPass.getText().equals("")){
             JOptionPane.showMessageDialog(this,"Nhập Đầy Đủ Thông Tin : ");
        }else{
-        String p="C:\\Users\\Admin\\Desktop\\File CSV\\login.csv";
+        String p="D:\\File CSV\\login.csv";
         try{
             try {
                 if(docFile(p)==1){
@@ -196,7 +193,7 @@ public class Login extends javax.swing.JFrame {
             
         }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnDangNhaoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
                 this.setVisible(false);
@@ -242,7 +239,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnDangNhao;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

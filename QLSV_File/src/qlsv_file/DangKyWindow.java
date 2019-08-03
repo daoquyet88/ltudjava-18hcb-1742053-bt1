@@ -63,7 +63,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         cbDSMH.setModel(model);
     }
     public void load() throws IOException{
-         String file="C:\\Users\\Admin\\Desktop\\File CSV\\dslop.csv";
+         String file="D:File CSV\\dslop.csv";
          docFileLH(file);
          File f=new File(file);
         String nameFile=f.getName();
@@ -426,7 +426,7 @@ public class DangKyWindow extends javax.swing.JPanel {
     }//GEN-LAST:event_txtHoTenActionPerformed
 
     private void cbLopItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbLopItemStateChanged
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\";
+        String file="D:File CSV\\";
         String nameLop=cbLop.getSelectedItem().toString();
         lopHoc=nameLop;
         String nameDSMH=nameLop+"_TKB.csv";
@@ -448,7 +448,7 @@ public class DangKyWindow extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String ma=((MonHoc)cbDSMH.getSelectedItem()).getMaMH();
         String name=cbLop.getSelectedItem().toString();
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+name+"_"+ma+".csv";
+        String file="D:\\File CSV\\"+name+"_"+ma+".csv";
         lineAll=file;
        // JOptionPane.showMessageDialog(cbLop,file);
         try {
@@ -461,7 +461,7 @@ public class DangKyWindow extends javax.swing.JPanel {
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         String  mssv=txtMSSV.getText();
         String maLop=mssv.substring(0,2)+"hcb";
-        String file="C:\\Users\\Admin\\Desktop\\File CSV\\"+maLop+".csv";
+        String file="D:File CSV\\"+maLop+".csv";
         JOptionPane.showMessageDialog(cbLop,file);
           
         FileReader fr=null;
