@@ -150,7 +150,7 @@ public class DangKyWindow extends javax.swing.JPanel {
           String mssv=txtMSSV.getText();
           String hoTen=txtHoTen.getText();
           String gioiTinh="";
-          if(rdNam.isEnabled())
+          if(rdNam.isSelected())
           {
               gioiTinh="Nam";
           }
@@ -451,7 +451,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         String name=cbLop.getSelectedItem().toString();
         String file="D:\\File CSV\\"+name+"_"+ma+".csv";
         lineAll=file;
-        JOptionPane.showMessageDialog(cbLop,file);
+        //JOptionPane.showMessageDialog(cbLop,file);
         try {
             docFile(file);
         } catch (IOException ex) {
@@ -463,7 +463,7 @@ public class DangKyWindow extends javax.swing.JPanel {
         String  mssv=txtMSSV.getText();
         String maLop=mssv.substring(0,2)+"hcb";
         String file="D:File CSV\\"+maLop+".csv";
-        JOptionPane.showMessageDialog(cbLop,file);
+       // JOptionPane.showMessageDialog(cbLop,file);
           
         FileReader fr=null;
         try {

@@ -271,9 +271,9 @@ public class SuaDiemFrame extends javax.swing.JFrame {
        String dk=txtDiemKhac.getText();
        String td=lbtd.getText();
        String dongSua=stt+","+mssv+","+hoTen+","+gk+","+ck+","+dk+","+td;
-       JOptionPane.showMessageDialog(thoat, dongSua);
+       //JOptionPane.showMessageDialog(thoat, dongSua);
        String p=lineAll;
-       JOptionPane.showMessageDialog(thoat,p);
+       //JOptionPane.showMessageDialog(thoat,p);
          String dataSV[];
          try{
             ArrayList<String> ar=new ArrayList<String>();

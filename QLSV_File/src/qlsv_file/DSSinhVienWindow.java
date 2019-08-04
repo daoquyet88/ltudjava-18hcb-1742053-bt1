@@ -129,7 +129,7 @@ public class DSSinhVienWindow extends javax.swing.JPanel {
           String mssv=txtMSSV.getText();
           String hoTen=txtHoTen.getText();
           String gioiTinh="";
-          if(rdNam.isEnabled()){
+          if(rdNam.isSelected()){
               gioiTinh="Nam";
           }
           else{

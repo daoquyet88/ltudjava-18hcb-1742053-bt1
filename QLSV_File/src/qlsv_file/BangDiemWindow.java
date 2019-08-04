@@ -12,12 +12,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static qlsv_file.DSSinhVienWindow.copyFile;
 
 /**
  *
@@ -39,13 +44,13 @@ public class BangDiemWindow extends javax.swing.JPanel {
         pnPhanTram.setVisible(false);
     }
     public void load() throws IOException{
-        String file="D:\\File CSV\\18hcb_CTT001_KQ.csv";
-        path=file;
-        lineAll=file;
-        File f=new File(file);
-        String nameFile=f.getName();
-        lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên: "+nameFile);
-        docFile(file);
+//        String file="D:\\File CSV\\18hcb_CTT001_KQ.csv";
+//        path=file;
+//        lineAll=file;
+//        File f=new File(file);
+//        String nameFile=f.getName();
+//        lbThongBao.setText("Quản Lý Bảng Điểm Sinh Viên: "+nameFile);
+//        docFile(file);
         String lh="D:\\File CSV\\dslop.csv";
         docFileLH(lh);
         
@@ -144,7 +149,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
         lbThongBao = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnImpỏt = new javax.swing.JButton();
         lbDuongDan = new javax.swing.JLabel();
         cbMonHoc = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -175,10 +180,10 @@ public class BangDiemWindow extends javax.swing.JPanel {
 
         jLabel1.setText("Chọn File Điểm Cần Import");
 
-        jButton1.setText("File Import");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnImpỏt.setText("File Import");
+        btnImpỏt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnImpỏtActionPerformed(evt);
             }
         });
 
@@ -194,7 +199,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
                         .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnImpỏt, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lbDuongDan, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -206,7 +211,7 @@ public class BangDiemWindow extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnImpỏt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbDuongDan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(235, Short.MAX_VALUE))
@@ -362,7 +367,8 @@ public class BangDiemWindow extends javax.swing.JPanel {
         pnPhanTram.setBounds(720, 440, 250, 80);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnImpỏtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImpỏtActionPerformed
+       
         JFileChooser file =new JFileChooser();
        file.setCurrentDirectory(new File(System.getProperty("user.home")));
        
@@ -373,9 +379,8 @@ public class BangDiemWindow extends javax.swing.JPanel {
         {
             File selectedFile=file.getSelectedFile();
             path=selectedFile.getAbsolutePath();
-            lineAll=path;
             //lbImg.setIcon(ResizeImage(path,null));
-            lbDuongDan.setText(path);
+            //lbPath.setText(path);
         }
         else{
             System.out.println("NO file select");
@@ -383,19 +388,45 @@ public class BangDiemWindow extends javax.swing.JPanel {
         
         try {
             // TODO add your handling code here:
-            docFile(path);
+        String []data;
+        String fileGoc="D:\\File CSV\\";
+        File f=new File(path);
+        String name=f.getName();
+        data=name.split("\\.");
+        String fileName=f.getName();
+        String fileKT=fileGoc+fileName;
+        File fKT=new  File(fileKT);
+        if(fKT.exists()){
+            JOptionPane.showMessageDialog(cbLop,"File Da ton tai");
+        }
+        else{
+            
+            Path source = Paths.get(path);
+ 
+		// Destination file.
+		Path destination = Paths.get(fileKT);
+		
+		try {
+			copyFile(source, destination);
+		} catch (IOException e) {
+			System.out.println("Lỗi Khi copy File");
+			e.printStackTrace();
+		}
+            
+            //ghiFileLopHoc("D:\\File CSV\\dslop.csv",data[0]);
+            docFile(fileKT);
+            JOptionPane.showMessageDialog(cbLop,"import Thành Công");
+            load();
+        }
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(DSSinhVienWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-        File f=new File(path);
-        String nameFile=f.getName();
-        lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
-        try {
-            docFile(path);
-        } catch (IOException ex) {
-            Logger.getLogger(BangDiemWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        // thu muc goc
+        
+        //lbThongBao.setText("Thông Tin Danh Sách Sinh Viên Lớp : "+nameFile);
+    }//GEN-LAST:event_btnImpỏtActionPerformed
     public void loadcb1(String p) throws FileNotFoundException, IOException{
         
          DefaultComboBoxModel model=new DefaultComboBoxModel();
@@ -435,7 +466,9 @@ public class BangDiemWindow extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_cbLopItemStateChanged
-
+    public static void copyFile(Path source, Path destination) throws IOException {
+		Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+	}
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
          String ma=((MonHoc)cbDSMH.getSelectedItem()).getMaMH();
         String name=cbLop.getSelectedItem().toString();
@@ -483,11 +516,11 @@ public class BangDiemWindow extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImpỏt;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox cbDSMH;
     private javax.swing.JComboBox cbLop;
     private javax.swing.JPanel cbMonHoc;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

@@ -54,7 +54,7 @@
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel1" min="-2" pref="187" max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="124" max="-2" attributes="0"/>
+                              <Component id="btnImpỏt" min="-2" pref="124" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -72,7 +72,7 @@
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnImpỏt" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lbDuongDan" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace pref="235" max="32767" attributes="0"/>
@@ -86,12 +86,12 @@
             <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n File &#x110;i&#x1ec3;m C&#x1ea7;n Import"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnImp&#x1ecf;t">
           <Properties>
             <Property name="text" type="java.lang.String" value="File Import"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImp&#x1ecf;tActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbDuongDan">
